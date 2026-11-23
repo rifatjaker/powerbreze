@@ -115,14 +115,14 @@
     <header>
       <div class="eyebrow">Project specification · V1.0</div>
       <h1>Website Requirements Specification</h1>
-      <p><strong>PowerBreeze HVAC and Appliance Services Website</strong></p>
+      <p><strong>Power Breeze Engineering Company Website</strong></p>
       <table class="meta">
         <tbody>
           <tr><th>Document version</th><td>1.0</td></tr>
           <tr><th>Status</th><td><span class="status">Draft</span></td></tr>
           <tr><th>Date</th><td>2026-11-23</td></tr>
-          <tr><th>Project</th><td>PowerBreeze</td></tr>
-          <tr><th>Prepared for</th><td>PowerBreeze business owner</td></tr>
+          <tr><th>Project</th><td>Power Breeze Engineering website</td></tr>
+          <tr><th>Prepared for</th><td>Power Breeze Engineering</td></tr>
           <tr><th>Prepared by</th><td>Imam Hossain Rifat (A2 Technologies)</td></tr>
         </tbody>
       </table>
@@ -132,16 +132,16 @@
     <section id="introduction">
       <h2>1. Introduction</h2>
       <h3>1.1 Purpose</h3>
-      <p>This document defines the functional and non-functional requirements for the PowerBreeze public website. The system will present HVAC and appliance services, service areas, company information, customer testimonials, and online inquiry options.</p>
+      <p>This document defines the functional and non-functional requirements for the Power Breeze Engineering public website. It reflects the company's electro-mechanical engineering, power infrastructure, electrical contracting, products, and project portfolio as represented on its existing company website.</p>
 
       <h3>1.2 Scope</h3>
-      <p>PowerBreeze is a responsive business website for residential and commercial customers. It will allow customers to learn about available services, submit quote requests, and contact the business by telephone or email.</p>
+      <p>Power Breeze Engineering is an electro-mechanical contractor and power engineering products and services provider, established in 2012. The website will serve government and private-sector clients, procurement teams, project owners, and engineering partners. It will present verified services, imported and supplied products, project experience, client references, credentials, offices, and contact channels.</p>
       <p>The in-scope system includes:</p>
       <ul>
         <li>Public website pages</li><li>Responsive desktop, tablet, and mobile layouts</li>
-        <li>Service and location information</li><li>Quote and contact forms</li>
-        <li>Email notifications for customer inquiries</li><li>Search-engine metadata</li>
-        <li>Analytics integration</li><li>Website administration for editing content</li>
+        <li>Electro-mechanical service, product, and project information</li><li>Company, credential, client, and office information</li>
+        <li>General, project, and product inquiry forms</li><li>Email notifications for business inquiries</li>
+        <li>Search-engine metadata</li><li>Consent-aware analytics integration</li><li>Website administration for editing content</li>
         <li>Basic security, privacy, and accessibility features</li>
       </ul>
       <p>The following are not included unless added by a change request:</p>
@@ -157,7 +157,7 @@
         <thead><tr><th>Term</th><th>Definition</th></tr></thead>
         <tbody>
           <tr><td>HVAC</td><td>Heating, ventilation, and air conditioning</td></tr>
-          <tr><td>CTA</td><td>Call to action</td></tr><tr><td>GTA</td><td>Greater Toronto Area</td></tr>
+          <tr><td>CTA</td><td>Call to action</td></tr>
           <tr><td>SRS</td><td>Software Requirements Specification</td></tr>
           <tr><td>CMS</td><td>Content Management System</td></tr><tr><td>SEO</td><td>Search Engine Optimization</td></tr>
         </tbody>
@@ -165,33 +165,35 @@
 
       <h3>1.4 References</h3>
       <ul>
-        <li><a href="https://powerbreeze.ca/">PowerBreeze live domain</a></li>
-        <li>Canadian Anti-Spam Legislation requirements</li>
-        <li>PIPEDA privacy requirements</li><li>WCAG 2.1 Level AA</li>
+        <li><a href="http://powerbreezebd.net/">Current company website</a></li>
+        <li><a href="https://powerbreeze.ca/">Planned website domain</a></li>
+        <li>Applicable Bangladesh privacy, cybersecurity, and procurement requirements (to be confirmed)</li>
+        <li>Canadian privacy and anti-spam requirements where the Canada office or Canadian audiences are in scope</li>
+        <li>WCAG 2.1 Level AA</li>
       </ul>
 
       <h3>1.5 Assumptions and Constraints</h3>
       <ul>
-        <li>The primary target market is Ontario, Canada.</li>
-        <li>Business content, prices, certifications, service areas, and contact details have not yet been confirmed and are marked as TBD.</li>
-        <li>Quote requests do not create a legally binding booking or confirmed appointment.</li>
+        <li>Bangladesh is the primary operating market; a Canada office is also listed on the existing company website. Geographic service coverage must be confirmed before location-specific claims are published.</li>
+        <li>The existing company website is the source of the service and product categories. Product availability, technical specifications, licenses, and project/client permissions must be verified before publication.</li>
+        <li>Inquiries do not create a legally binding quotation, contract, purchase order, or confirmed project.</li>
         <li>A single public website administrator will be sufficient for initial operations.</li>
         <li>The website will use HTTPS and will be hosted on a commercially supported web host.</li>
-        <li>No appointment-availability or technician-dispatch integration is required in the initial release.</li>
+        <li>License, certification, enlistment, project, and client information must be approved and substantiated before publication.</li>
       </ul>
     </section>
 
     <section id="description">
       <h2>2. Overall Description</h2>
       <h3>2.1 Product Perspective</h3>
-      <p>The website is a standalone public-facing web application. It will integrate with email delivery and optional analytics services and support a CMS or equivalent content-management mechanism.</p>
+      <p>The website is a standalone public-facing company and capability site. It will integrate with email delivery and optional analytics services and support a CMS or equivalent content-management mechanism for products, services, projects, clients, and corporate information.</p>
 
       <h3>2.2 Product Functions</h3>
       <ul>
-        <li>Present company and service information</li><li>Categorize HVAC and appliance services</li>
-        <li>Capture customer quote requests</li><li>Route customer messages to business staff</li>
-        <li>Display service coverage areas</li><li>Provide click-to-call and email actions</li>
-        <li>Present verified testimonials</li><li>Support content updates</li>
+        <li>Present company profile, verified credentials, and engineering capabilities</li><li>Categorize electro-mechanical services and products</li>
+        <li>Showcase approved projects and client references</li><li>Capture project, product, and general business inquiries</li>
+        <li>Present verified office and service-area information</li><li>Provide click-to-call and email actions</li>
+        <li>Support content updates</li>
         <li>Produce crawlable, search-friendly pages</li>
       </ul>
 
@@ -199,9 +201,10 @@
       <table>
         <thead><tr><th>User</th><th>Description</th></tr></thead>
         <tbody>
-          <tr><td>Visitor</td><td>Views information and submits inquiries</td></tr>
-          <tr><td>Administrator</td><td>Updates pages, services, locations, testimonials, and settings</td></tr>
-          <tr><td>Support recipient</td><td>Receives and follows up on submitted inquiries</td></tr>
+          <tr><td>Visitor / potential client</td><td>Reviews company capabilities, products, projects, and submits an inquiry</td></tr>
+          <tr><td>Procurement representative</td><td>Reviews product categories and submits a supply or tender-related inquiry</td></tr>
+          <tr><td>Administrator</td><td>Updates company pages, services, products, projects, clients, media, and settings</td></tr>
+          <tr><td>Inquiry recipient</td><td>Receives and follows up on submitted inquiries</td></tr>
         </tbody>
       </table>
 
@@ -219,6 +222,7 @@
         <li>Form submissions must be protected against spam and abuse.</li>
         <li>Content must be maintainable by a non-technical administrator.</li>
         <li>Third-party scripts must not block meaningful page rendering.</li>
+        <li>Project details, client identities, and tender content must be approved before public display.</li>
       </ul>
     </section>
 
@@ -227,67 +231,96 @@
       <h3>3.1 Functional Requirements</h3>
 
       <h4>FR-01: Home Page</h4>
-      <p>The system shall provide a home page containing:</p>
+      <p>The home page shall feature the Power Breeze Engineering name and value proposition, establishment year, government/private-sector focus, a project/product inquiry CTA, engineering capabilities, featured products and approved projects, verified credentials, and confirmed office details.</p>
+
+      <h4>FR-02: Company Profile</h4>
+      <p>The profile shall describe the company's establishment in 2012, government and private-sector work, mission, vision, strengths, turnkey approach, and approved management/engineering biographies. The existing website claims first-class electro-mechanical contractor status, ABC License, and Electrical Supervisory License; verify the exact issuing authority, current status, and evidence before publication.</p>
+
+      <h4>FR-03: Engineering Services</h4>
+      <p>The website shall present verified service scope, geographic availability, and capabilities including:</p>
       <ul>
-        <li>Company name and concise value proposition</li><li>Primary CTA to request a quote</li>
-        <li>Primary CTA to call the business</li><li>HVAC and appliance service summaries</li>
-        <li>Trust indicators, if supplied and verified</li><li>Service-area summary</li>
-        <li>Contact information</li><li>Selected testimonials</li>
-        <li>Prominent emergency or fast-response messaging only if confirmed</li>
+        <li>132/33/11 kV substation supply, installation, testing, and commissioning</li>
+        <li>Transformer, HT/LT switchgear, power factor improvement plant, BBT, CT/PT, lightning arrester, DOFC, isolator, and insulator works</li>
+        <li>Diesel/gas generators and synchronization/common-bus panels</li>
+        <li>Solar plants and solar security lighting</li>
+        <li>HT/LT underground and overhead cables, power lines, and commercial power connections</li>
+        <li>Electrical wiring, distribution boards, motor control panels, changeover switches, and industrial/commercial lighting</li>
+        <li>Electrical grounding and earthing, including GI pipe laying and boring where applicable</li>
+        <li>MSPP site survey, network planning, design, and grounding work</li>
+        <li>Battery, rectifier, and OSN installation, commissioning, and maintenance</li>
+        <li>HVAC, elevators, cooling towers, lighting protection, and fire safety systems</li>
+        <li>Turnkey electro-mechanical and civil construction, including interior decoration where offered</li>
+      </ul>
+      <p>Service pages shall describe factual project scope and applicable delivery stages. No unverified technical rating, certification, or service availability may be implied.</p>
+
+      <h4>FR-04: Products and Equipment</h4>
+      <p>The product catalogue shall present the company's listed import/supply categories, subject to current availability and specification confirmation:</p>
+      <ul>
+        <li>33/11 kV, 2500 A vacuum circuit breaker (VCB); 11 kVA distribution dry-type transformer</li>
+        <li>132/33/11 kV underground cable and gas-insulated substation (GIS)</li>
+        <li>Lighting protection system (LPS) and fire safety system (FSS)</li>
+        <li>Batteries, battery chargers, oil testing sets, and vacuum oil centrifuging machines</li>
+        <li>Lightning arresters, DOFC, isolators, insulators, CT/PT, pre-paid meters, and optical fiber</li>
+        <li>Solar plants, BBT systems, passenger/bed elevators</li>
+        <li>Transformers, distribution boxes, synchronization panels, solar power systems, and diesel generators</li>
+      </ul>
+      <p>Product records shall support descriptions, approved images, verified specifications, availability notes, and inquiry actions. Online purchase is out of scope.</p>
+
+      <h4>FR-05: Project Portfolio</h4>
+      <p>Visitors shall be able to browse approved projects by title, client/sector, location, scope, verified capacity/voltage, completion period, and imagery. Confidential project details and client identities shall not be published without authorization.</p>
+
+      <h4>FR-06: Clients and Enlistments</h4>
+      <p>The site may display government/private-sector clients, procurement enlistments, and institutional references with permission and current verification; their display shall not imply endorsement.</p>
+
+      <h4>FR-07: Offices and Coverage</h4>
+      <p>The site shall publish confirmed Dhaka head-office, local-office, and Canada-office details where current. Coverage statements shall be confirmed by the company and shall not create unsupported local-service claims.</p>
+      <p>The existing company website lists the following contact details; reconfirm them before launch:</p>
+      <ul>
+        <li>Dhaka head office: Dr. Nawab Ali Tower, Suite #501E, 24/A Purana Paltan, Dhaka-1000, Bangladesh; +88-02-9585474; +8801711520071; info@powerbreezebd.net</li>
+        <li>Local office: 438 Abedin Market (3rd Floor), Noyapara, Sonirakhra, P.O. Dania, P.S. Jatrabari, Dhaka-1236; +8801819244217; ripon_218@yahoo.com</li>
+        <li>Canada office: Suite 31, Workplace K Ltd, 1940 Eglinton Ave East, Scarborough, ON M1L 4R1, Toronto, Canada; +1 (647) 332-4217; +1 (647) 858-5225</li>
       </ul>
 
-      <h4>FR-02: About Page</h4>
-      <p>The system shall provide an About PowerBreeze page describing purpose, experience, service approach, residential and commercial coverage, customer commitment, and authorized team or technician information.</p>
+      <h4>FR-08: Business Inquiry Form</h4>
+      <p>The form shall support general, project/service, and product/procurement inquiries. As applicable, it shall collect name, organization, role, phone, email, inquiry type, service or product, project location, quantity or technical scope, message, and contact consent. Optional attachments shall be type/size restricted. The form shall discourage submission of confidential tender material.</p>
 
-      <h4>FR-03: Service Pages</h4>
-      <p>The system shall provide category and detail pages for confirmed HVAC and appliance services.</p>
-      <p><strong>HVAC:</strong> air conditioner repair and installation, furnace repair and installation, heat pump repair and installation, HVAC maintenance, thermostat repair and replacement, ductless mini-split systems, and emergency service if offered.</p>
-      <p><strong>Appliances:</strong> refrigerator, oven, range, stove, dishwasher, washer, and dryer repair, plus appliance installation and maintenance.</p>
-      <p>Each service detail shall include description, common symptoms, included work, property applicability, repair and installation options, a quote CTA, and approved FAQ content.</p>
+      <h4>FR-09: Inquiry Submission</h4>
+      <p>Valid submissions shall receive confirmation, be recorded in the approved backend/CRM queue, notify the configured business inbox, optionally send a customer receipt, prevent duplicates, and reject invalid input.</p>
 
-      <h4>FR-04: Location Pages</h4>
-      <p>The system shall provide a GTA and surrounding-area landing page. Individual location pages may be published only where substantively supported. Location content shall include the location name, residential and commercial coverage, available services, local CTA, and accurate non-duplicated copy.</p>
+      <h4>FR-10: Contact</h4>
+      <p>The contact page shall show confirmed phone, fax, email, office addresses, verified business hours when provided, and a general contact form with optional maps.</p>
 
-      <h4>FR-05: Quote Request Form</h4>
-      <p>The form shall collect full name, phone number, email address, service category and type, postal code, property type, preferred contact method and timeframe, appliance or equipment type, issue description, and consent to be contacted. Required fields shall be clearly marked and contact and postal-code formats shall be validated.</p>
+      <h4>FR-11: Telephone and Email Actions</h4>
+      <p>Published phone numbers shall use device-friendly telephone links, and published email addresses shall use valid email links.</p>
 
-      <h4>FR-06: Quote Submission</h4>
-      <p>The system shall display confirmation, create a backend or CRM import record, send a configured support notification, optionally send a customer confirmation, prevent duplicates, and prevent invalid or incomplete submissions.</p>
+      <h4>FR-12: Clients, Credentials, and Featured Content</h4>
+      <p>Approved client references, license/certificate evidence, project highlights, and management messages may be published. Formal credentials require permission and up-to-date validation.</p>
 
-      <h4>FR-07: Contact Page</h4>
-      <p>The contact page shall show the phone number, email address, business hours, service area, contact form, optional map, and a clear response-time expectation.</p>
+      <h4>FR-13: Project and Product Gallery</h4>
+      <p>The gallery shall use approved project/product images with alt text and shall not expose confidential project documents, restricted facilities, or personal information.</p>
 
-      <h4>FR-08: Telephone and Email Actions</h4>
-      <p>The system shall use device-friendly telephone links and valid email links for published contact details.</p>
+      <h4>FR-14: Frequently Asked Questions</h4>
+      <p>Accessible, approved FAQs may cover procurement, project delivery, products, and services.</p>
 
-      <h4>FR-09: Testimonials</h4>
-      <p>The system shall display only supplied and approved testimonials. Administrators shall be able to add, edit, publish, unpublish, and reorder testimonials.</p>
+      <h4>FR-15: Navigation</h4>
+      <p>Navigation shall connect company profile, services, products, clients, projects, gallery, and contact content with accessible desktop/mobile menus, breadcrumbs, and active-page indication.</p>
 
-      <h4>FR-10: Gallery</h4>
-      <p>The system may display approved work and equipment photos with alternative text. Photos shall not disclose customer property or personal information.</p>
+      <h4>FR-16: Search and Filtering</h4>
+      <p>Site search and project/product filters should exclude unpublished content and provide a clear no-results state.</p>
 
-      <h4>FR-11: Frequently Asked Questions</h4>
-      <p>The system shall provide reusable, accessible FAQ components supporting category and page-level questions.</p>
+      <h4>FR-17: CMS Administration</h4>
+      <p>Authorized administrators shall manage pages, services, products, projects, client/reference records, credentials, offices, media, navigation, contact details, and metadata, with preview and publication controls.</p>
 
-      <h4>FR-12: Navigation</h4>
-      <p>The system shall provide header, mobile, and footer navigation, nested-page breadcrumbs, active-page indication, and links to service and contact pages.</p>
+      <h4>FR-18: SEO and Social Metadata</h4>
+      <p>The system shall support unique titles/descriptions, canonical URLs, Open Graph metadata, Organization or relevant contracting-business schema, breadcrumbs, approved FAQ schema, XML sitemap, robots configuration, and alt text.</p>
 
-      <h4>FR-13: Search</h4>
-      <p>Site search should be provided when navigation becomes inefficient. Results shall be relevant, exclude unpublished content, and state when no result is found.</p>
+      <h4>FR-19: Analytics</h4>
+      <p>Where consent permits, aggregate analytics may track inquiry starts/submissions by type, phone/email clicks, and key service, product, and project views. Do not send project/tender inquiry contents to analytics.</p>
 
-      <h4>FR-14: CMS Administration</h4>
-      <p>Authorized administrators shall create, edit, preview, publish, and archive pages, services, locations, testimonials, and media, and update navigation, contact details, and business hours.</p>
-
-      <h4>FR-15: SEO and Social Metadata</h4>
-      <p>The system shall support unique titles and descriptions, canonical URLs, Open Graph metadata, LocalBusiness or ProfessionalService schema, breadcrumb and approved FAQ schema, XML sitemap, robots configuration, and image alt text.</p>
-
-      <h4>FR-16: Analytics</h4>
-      <p>The system shall track where consent permits: quote-form starts and submissions, telephone and email clicks, and key service-page views. Tracking controls shall be respected.</p>
-
-      <h4>FR-17: Privacy and Consent</h4>
+      <h4>FR-20: Privacy and Consent</h4>
       <p>The system shall provide a Privacy Policy, analytics or cookie notice when needed, legal consent controls, and a footer privacy link.</p>
 
-      <h4>FR-18: Error Pages</h4>
+      <h4>FR-21: Error Pages</h4>
       <p>The system shall provide branded 404 and generic unavailable pages with navigation and contact options.</p>
 
       <h3>3.2 External Interface Requirements</h3>
@@ -296,16 +329,16 @@
         <li>Branding shall use a consistent blue/green palette unless replaced by an approved brand guide.</li>
         <li>Typography shall remain readable across breakpoints.</li><li>Links and controls shall include visible keyboard focus.</li>
         <li>Form validation shall be understandable and accessible.</li>
-        <li>Call buttons shall remain discoverable on mobile devices.</li>
+        <li>Telephone, email, project inquiry, and product inquiry actions shall remain discoverable.</li>
         <li>The layout shall avoid horizontal scrolling at supported widths.</li>
       </ul>
       <h4>3.2.2 Hardware Interfaces</h4><p>No direct hardware interfaces are required.</p>
       <h4>3.2.3 Software Interfaces</h4>
       <table><thead><tr><th>Interface</th><th>Purpose</th></tr></thead><tbody>
-        <tr><td>SMTP or transactional email provider</td><td>Send inquiry notifications and confirmations</td></tr>
+        <tr><td>SMTP or transactional email provider</td><td>Send business inquiry notifications and optional confirmations</td></tr>
         <tr><td>Analytics provider</td><td>Aggregate website measurement</td></tr>
         <tr><td>Map provider</td><td>Optional embedded map</td></tr>
-        <tr><td>CMS or database</td><td>Manage and persist website content</td></tr>
+        <tr><td>CMS or database</td><td>Manage pages, products, services, projects, and references</td></tr>
         <tr><td>Form spam service</td><td>Detect automated or abusive submissions</td></tr>
       </tbody></table>
       <h4>3.2.4 Communications Interfaces</h4>
@@ -322,7 +355,7 @@
       <p>The system shall support at least 500 concurrent users and expected marketing traffic peaks.</p>
 
       <h4>NFR-04: Security</h4>
-      <p>The system shall use HTTPS, strong authenticated administration, authorization controls, login throttling, server-side form validation, protected secrets, dependency scanning, a retention schedule, and private customer submissions.</p>
+      <p>The system shall use HTTPS, strong authenticated administration, authorization controls, login throttling, server-side form validation, protected secrets, dependency scanning, a retention schedule, and private business inquiries. Optional project attachments shall be type/size restricted, scanned, and stored outside public executable paths.</p>
 
       <h4>NFR-05: Accessibility</h4>
       <p>The website shall conform to WCAG 2.1 Level AA, support keyboard and assistive technologies, and provide meaningful names, alternatives, contrast, and accessible form errors.</p>
@@ -331,7 +364,7 @@
       <p>The system shall use semantic headings, short descriptive URLs, descriptive links, synchronized sitemap updates, and non-duplicated location and service content.</p>
 
       <h4>NFR-07: Usability</h4>
-      <p>A visitor shall reach the quote form within two clicks. Contact actions shall remain visible, mobile navigation shall work with one hand, and validation shall be clear and corrective.</p>
+      <p>A visitor shall reach a project or product inquiry form within two clicks. Contact actions shall remain visible, mobile navigation shall work with one hand, and validation shall be clear and corrective.</p>
 
       <h4>NFR-08: Maintainability</h4>
       <p>The project shall use version control, environment-specific configuration, repeatable deployment, documented administration, and isolated third-party integrations.</p>
@@ -351,23 +384,27 @@
       <h3>4.1 Key Entities</h3>
       <table><thead><tr><th>Entity</th><th>Required Attributes</th></tr></thead><tbody>
         <tr><td>Service</td><td>ID, title, slug, category, description, status</td></tr>
-        <tr><td>Location</td><td>ID, name, region, postal areas, description, status</td></tr>
-        <tr><td>Inquiry</td><td>ID, name, contact information, service, address area, message, status, created date</td></tr>
-        <tr><td>Testimonial</td><td>ID, customer name or alias, content, service, location, status</td></tr>
+        <tr><td>Product</td><td>ID, name, category, description, verified specifications, image, availability note, status</td></tr>
+        <tr><td>Project</td><td>ID, title, approved client/sector, location, scope, verified capacity/voltage, dates, media, status</td></tr>
+        <tr><td>Office</td><td>ID, office type, address, phone, email, operating status</td></tr>
+        <tr><td>Client/reference</td><td>ID, name/logo, permission/status, reference details</td></tr>
+        <tr><td>Credential</td><td>ID, title, issuer, identifier, valid dates, evidence, publication approval</td></tr>
+        <tr><td>Inquiry</td><td>ID, name, organization, contact, type, service/product, project location, message, status, created date</td></tr>
         <tr><td>Media</td><td>ID, file, alternative text, usage, status</td></tr>
         <tr><td>Page</td><td>ID, title, slug, content, metadata, publication status</td></tr>
       </tbody></table>
       <h3>4.2 Inquiry Retention</h3>
-      <p>Retention shall be defined before launch. A reasonable default is 24 months from the last activity, subject to applicable law and business policy.</p>
+      <p>Retention shall be defined before launch according to applicable law and company policy. Project, procurement, and tender details shall be treated as confidential and shall not be included in analytics or displayed publicly.</p>
     </section>
 
     <section id="acceptance">
       <h2>5. Acceptance Criteria</h2>
       <ul>
-        <li>Home, About, services, locations, contact, privacy, and error pages are complete.</li>
-        <li>Every implemented service and location is supported by confirmed business information.</li>
+        <li>Home, company profile, services, products, projects, clients/references, contact, privacy, and error pages are complete.</li>
+        <li>The content reflects the company's actual electro-mechanical and power engineering work.</li>
+        <li>Product specifications, credentials, client references, and project details have company approval and evidence.</li>
         <li>All links and calls to action point to valid destinations.</li>
-        <li>The quote form validates, submits, notifies staff, and shows confirmation.</li>
+        <li>Project, product, and general inquiry forms validate, submit, notify staff, and show confirmation.</li>
         <li>Spam protection is active.</li><li>Responsive checks pass from 320 to 1920 pixels.</li>
         <li>Core pages pass WCAG 2.1 Level AA automated and manual checks.</li>
         <li>Metadata, sitemap, robots, and canonical URLs are configured.</li>
@@ -383,7 +420,7 @@
       <h2>6. Verification and Testing</h2>
       <table><thead><tr><th>Test Area</th><th>Verification Method</th></tr></thead><tbody>
         <tr><td>Navigation</td><td>Manual desktop and mobile testing</td></tr>
-        <tr><td>Forms</td><td>Valid, invalid, duplicate, and spam submissions</td></tr>
+        <tr><td>Forms</td><td>Valid, invalid, duplicate, spam, and restricted-attachment submissions</td></tr>
         <tr><td>Responsive layout</td><td>Browser and viewport testing</td></tr>
         <tr><td>Accessibility</td><td>Automated, keyboard, and screen-reader testing</td></tr>
         <tr><td>Performance</td><td>Lighthouse and WebPageTest measurements</td></tr>
@@ -399,28 +436,28 @@
     <section id="release">
       <h2>7. Release Priorities</h2>
       <h3>Priority 1 — Launch</h3>
-      <p>Home, About, core services, contact and quote forms, CTAs, privacy policy, mobile responsiveness, HTTPS, basic SEO, and core accessibility.</p>
+      <p>Home, company profile, core engineering services, product catalogue, project portfolio, approved credentials/references, contact and project/product inquiry forms, privacy policy, mobile responsiveness, HTTPS, basic SEO, and core accessibility.</p>
       <h3>Priority 2 — Expansion</h3>
-      <p>Location pages, expanded services, testimonials, gallery, FAQ, and analytics dashboard integration.</p>
+      <p>Additional products and project filters, capability detail pages, client/enlistment directory, project/product gallery, FAQ, and analytics dashboard integration.</p>
       <h3>Priority 3 — Future</h3>
-      <p>Online scheduling, customer portal, technician tracking, payments, CRM integration, review aggregation, and live chat.</p>
+      <p>CRM integration, access-controlled tender/procurement document center, project case studies, and Bangla/English content.</p>
     </section>
 
     <section id="open-items">
       <h2>8. Open Items Requiring Confirmation</h2>
       <table><thead><tr><th>Item</th><th>Required Decision</th></tr></thead><tbody>
-        <tr><td>Company details</td><td>Legal name, operating name, address, and phone</td></tr>
-        <tr><td>Service scope</td><td>Exact HVAC and appliance services offered</td></tr>
-        <tr><td>Brands</td><td>Appliance and HVAC brands supported</td></tr>
-        <tr><td>Service area</td><td>Confirmed cities and postal-code coverage</td></tr>
-        <tr><td>Pricing</td><td>Flat fees, service-call fees, or quote-only model</td></tr>
-        <tr><td>Service call</td><td>Whether repairs include free or paid service calls</td></tr>
-        <tr><td>Emergency service</td><td>Availability, hours, and response guarantee</td></tr>
-        <tr><td>Commercial service</td><td>Scope and industries supported</td></tr>
-        <tr><td>Reviews</td><td>Approved testimonials and review-policy links</td></tr>
-        <tr><td>Branding</td><td>Logo, colors, fonts, and photography</td></tr>
-        <tr><td>Team</td><td>Authorized staff profiles and credentials</td></tr>
-        <tr><td>Contact workflow</td><td>Inbox, response time, and escalation process</td></tr>
+        <tr><td>Company details</td><td>Confirm official business name, language, company history, and office status</td></tr>
+        <tr><td>Service scope</td><td>Confirm current services, voltage ratings, capacity ranges, and geographic availability</td></tr>
+        <tr><td>Products</td><td>Confirm active supply items, brands, specifications, lead times, and warranty information</td></tr>
+        <tr><td>Licenses</td><td>Verify current ABC Contractor and Electrical Supervisory License claims and evidence</td></tr>
+        <tr><td>Projects</td><td>Approve dates, client names, scopes, capacities, images, and confidentiality status</td></tr>
+        <tr><td>Clients</td><td>Approve logos, names, enlistment status, and permissions</td></tr>
+        <tr><td>Service area</td><td>Confirm Bangladesh coverage and how the Canada office serves clients</td></tr>
+        <tr><td>Commercial model</td><td>Confirm project inquiry, tender, procurement, and quotation workflow</td></tr>
+        <tr><td>Branding</td><td>Approve logo, colors, fonts, photography, and company naming</td></tr>
+        <tr><td>Team</td><td>Approve staff biographies, roles, and credentials</td></tr>
+        <tr><td>Contact workflow</td><td>Confirm current phones, fax, email, office addresses, inbox, response time, and retention</td></tr>
+        <tr><td>Languages</td><td>Confirm English-only launch or English/Bangla support</td></tr>
         <tr><td>CMS</td><td>Preferred platform and hosting provider</td></tr>
         <tr><td>Domain</td><td>DNS ownership and email configuration</td></tr>
         <tr><td>Analytics</td><td>Provider and consent requirements</td></tr>
