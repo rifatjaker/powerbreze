@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PowerBreeze - Website Requirements Specification</title>
+  <style>
+    :root { --navy: #16324f; --blue: #2878b8; --green: #61b15a; --light: #f3f7fa; --border: #d7e1e8; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #24313d; background: #fff; font: 15px/1.6 Arial, sans-serif; }
+    .layout { display: grid; grid-template-columns: 280px minmax(0, 920px); max-width: 1200px; margin: 0 auto; }
+    nav { position: sticky; top: 0; align-self: start; height: 100vh; overflow: auto; padding: 30px 24px; background: var(--light); border-right: 1px solid var(--border); }
+    nav h2 { margin: 0 0 16px; color: var(--navy); font-size: 20px; }
+    nav ol { margin: 0; padding-left: 20px; }
+    nav li { margin: 5px 0; }
+    nav a { color: var(--blue); text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+    main { padding: 48px 60px 80px; }
+    header { padding-bottom: 24px; border-bottom: 4px solid var(--green); }
+    h1 { margin: 0; color: var(--navy); font-size: 36px; line-height: 1.2; }
+    h2 { margin-top: 42px; color: var(--navy); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    h3 { margin-top: 26px; color: #245b82; }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; }
+    th, td { border: 1px solid var(--border); padding: 9px 12px; text-align: left; vertical-align: top; }
+    th { background: var(--navy); color: #fff; }
+    tr:nth-child(even) td { background: #f8fafb; }
+    code { background: var(--light); padding: 2px 5px; }
+    a { color: var(--blue); }
+    .meta { margin-top: 16px; }
+    .status { display: inline-block; background: #fff3cd; color: #6b5700; border-radius: 20px; padding: 4px 10px; font-weight: bold; }
+    @media (max-width: 800px) {
+      .layout { display: block; }
+      nav { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+      main { padding: 32px 20px 60px; }
+      h1 { font-size: 28px; }
+    }
+    @media print {
+      nav { display: none; }
+      .layout { display: block; }
+      main { max-width: none; padding: 20px; }
+      h2 { break-after: avoid; }
+      table { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav aria-label="Table of contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#introduction">Introduction</a></li>
+      <li><a href="#description">Overall Description</a></li>
+      <li><a href="#requirements">Specific Requirements</a></li>
+      <li><a href="#data">Data Requirements</a></li>
+      <li><a href="#acceptance">Acceptance Criteria</a></li>
+      <li><a href="#testing">Verification and Testing</a></li>
+      <li><a href="#release">Release Priorities</a></li>
+      <li><a href="#open-items">Open Items</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <header>
+      <h1>Website Requirements Specification</h1>
+      <p><strong>PowerBreeze HVAC and Appliance Services Website</strong></p>
+      <table class="meta">
+        <tbody>
+          <tr><th>Document version</th><td>1.0</td></tr>
+          <tr><th>Status</th><td><span class="status">Draft</span></td></tr>
+          <tr><th>Date</th><td>2026-11-23</td></tr>
+          <tr><th>Project</th><td>PowerBreeze</td></tr>
+          <tr><th>Prepared for</th><td>PowerBreeze business owner</td></tr>
+          <tr><th>Prepared by</th><td>Imam Hossain Rifat (A2 Technologies)</td></tr>
+        </tbody>
+      </table>
+    </header>
+
+    <section id="introduction">
+      <h2>1. Introduction</h2>
+      <h3>1.1 Purpose</h3>
+      <p>This document defines the functional and non-functional requirements for the PowerBreeze public website. The system will present HVAC and appliance services, service areas, company information, customer testimonials, and online inquiry options.</p>
+
+      <h3>1.2 Scope</h3>
+      <p>PowerBreeze is a responsive business website for residential and commercial customers. It will allow customers to learn about available services, submit quote requests, and contact the business by telephone or email.</p>
+      <p>The in-scope system includes:</p>
+      <ul>
+        <li>Public website pages</li><li>Responsive desktop, tablet, and mobile layouts</li>
+        <li>Service and location information</li><li>Quote and contact forms</li>
+        <li>Email notifications for customer inquiries</li><li>Search-engine metadata</li>
+        <li>Analytics integration</li><li>Website administration for editing content</li>
+        <li>Basic security, privacy, and accessibility features</li>
+      </ul>
+      <p>The following are not included unless added by a change request:</p>
+      <ul>
+        <li>Customer accounts or login</li><li>Online payments</li>
+        <li>Appointment scheduling and calendar integration</li><li>Live chat</li>
+        <li>Technician dispatching</li><li>Inventory, invoicing, or accounting</li>
+        <li>Native mobile applications</li><li>E-commerce</li>
+      </ul>
+
+      <h3>1.3 Definitions and Acronyms</h3>
+      <table>
+        <thead><tr><th>Term</th><th>Definition</th></tr></thead>
+        <tbody>
+          <tr><td>HVAC</td><td>Heating, ventilation, and air conditioning</td></tr>
+          <tr><td>CTA</td><td>Call to action</td></tr><tr><td>GTA</td><td>Greater Toronto Area</td></tr>
+          <tr><td>SRS</td><td>Software Requirements Specification</td></tr>
+          <tr><td>CMS</td><td>Content Management System</td></tr><tr><td>SEO</td><td>Search Engine Optimization</td></tr>
+        </tbody>
+      </table>
+
+      <h3>1.4 References</h3>
+      <ul>
+        <li><a href="https://powerbreeze.ca/">PowerBreeze live domain</a></li>
+        <li>Canadian Anti-Spam Legislation requirements</li>
+        <li>PIPEDA privacy requirements</li><li>WCAG 2.1 Level AA</li>
+      </ul>
+
+      <h3>1.5 Assumptions and Constraints</h3>
+      <ul>
+        <li>The primary target market is Ontario, Canada.</li>
+        <li>Business content, prices, certifications, service areas, and contact details have not yet been confirmed and are marked as TBD.</li>
+        <li>Quote requests do not create a legally binding booking or confirmed appointment.</li>
+        <li>A single public website administrator will be sufficient for initial operations.</li>
+        <li>The website will use HTTPS and will be hosted on a commercially supported web host.</li>
+        <li>No appointment-availability or technician-dispatch integration is required in the initial release.</li>
+      </ul>
+    </section>
+
+    <section id="description">
+      <h2>2. Overall Description</h2>
+      <h3>2.1 Product Perspective</h3>
+      <p>The website is a standalone public-facing web application. It will integrate with email delivery and optional analytics services and support a CMS or equivalent content-management mechanism.</p>
+
+      <h3>2.2 Product Functions</h3>
+      <ul>
+        <li>Present company and service information</li><li>Categorize HVAC and appliance services</li>
+        <li>Capture customer quote requests</li><li>Route customer messages to business staff</li>
+        <li>Display service coverage areas</li><li>Provide click-to-call and email actions</li>
+        <li>Present verified testimonials</li><li>Support content updates</li>
+        <li>Produce crawlable, search-friendly pages</li>
+      </ul>
+
+      <h3>2.3 User Classes</h3>
+      <table>
+        <thead><tr><th>User</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Visitor</td><td>Views information and submits inquiries</td></tr>
+          <tr><td>Administrator</td><td>Updates pages, services, locations, testimonials, and settings</td></tr>
+          <tr><td>Support recipient</td><td>Receives and follows up on submitted inquiries</td></tr>
+        </tbody>
+      </table>
+
+      <h3>2.4 Operating Environment</h3>
+      <ul>
+        <li>Modern desktop and mobile browsers</li><li>Responsive layouts from 320 pixels wide upward</li>
+        <li>Public hosting with HTTPS</li>
+        <li>Web server, database, and CMS or static-site build system selected during implementation</li>
+      </ul>
+
+      <h3>2.5 Design and Implementation Constraints</h3>
+      <ul>
+        <li>The public interface must be accessible and usable without JavaScript for core content.</li>
+        <li>User data must be processed only for the stated inquiry purpose.</li>
+        <li>Form submissions must be protected against spam and abuse.</li>
+        <li>Content must be maintainable by a non-technical administrator.</li>
+        <li>Third-party scripts must not block meaningful page rendering.</li>
+      </ul>
+    </section>
+
+    <section id="requirements">
+      <h2>3. Specific Requirements</h2>
+      <h3>3.1 Functional Requirements</h3>
+
+      <h4>FR-01: Home Page</h4>
+      <p>The system shall provide a home page containing:</p>
+      <ul>
+        <li>Company name and concise value proposition</li><li>Primary CTA to request a quote</li>
+        <li>Primary CTA to call the business</li><li>HVAC and appliance service summaries</li>
+        <li>Trust indicators, if supplied and verified</li><li>Service-area summary</li>
+        <li>Contact information</li><li>Selected testimonials</li>
+        <li>Prominent emergency or fast-response messaging only if confirmed</li>
+      </ul>
+
+      <h4>FR-02: About Page</h4>
+      <p>The system shall provide an About PowerBreeze page describing purpose, experience, service approach, residential and commercial coverage, customer commitment, and authorized team or technician information.</p>
+
+      <h4>FR-03: Service Pages</h4>
+      <p>The system shall provide category and detail pages for confirmed HVAC and appliance services.</p>
+      <p><strong>HVAC:</strong> air conditioner repair and installation, furnace repair and installation, heat pump repair and installation, HVAC maintenance, thermostat repair and replacement, ductless mini-split systems, and emergency service if offered.</p>
+      <p><strong>Appliances:</strong> refrigerator, oven, range, stove, dishwasher, washer, and dryer repair, plus appliance installation and maintenance.</p>
+      <p>Each service detail shall include description, common symptoms, included work, property applicability, repair and installation options, a quote CTA, and approved FAQ content.</p>
+
+      <h4>FR-04: Location Pages</h4>
+      <p>The system shall provide a GTA and surrounding-area landing page. Individual location pages may be published only where substantively supported. Location content shall include the location name, residential and commercial coverage, available services, local CTA, and accurate non-duplicated copy.</p>
+
+      <h4>FR-05: Quote Request Form</h4>
+      <p>The form shall collect full name, phone number, email address, service category and type, postal code, property type, preferred contact method and timeframe, appliance or equipment type, issue description, and consent to be contacted. Required fields shall be clearly marked and contact and postal-code formats shall be validated.</p>
+
+      <h4>FR-06: Quote Submission</h4>
+      <p>The system shall display confirmation, create a backend or CRM import record, send a configured support notification, optionally send a customer confirmation, prevent duplicates, and prevent invalid or incomplete submissions.</p>
+
+      <h4>FR-07: Contact Page</h4>
+      <p>The contact page shall show the phone number, email address, business hours, service area, contact form, optional map, and a clear response-time expectation.</p>
+
+      <h4>FR-08: Telephone and Email Actions</h4>
+      <p>The system shall use device-friendly telephone links and valid email links for published contact details.</p>
+
+      <h4>FR-09: Testimonials</h4>
+      <p>The system shall display only supplied and approved testimonials. Administrators shall be able to add, edit, publish, unpublish, and reorder testimonials.</p>
+
+      <h4>FR-10: Gallery</h4>
+      <p>The system may display approved work and equipment photos with alternative text. Photos shall not disclose customer property or personal information.</p>
+
+      <h4>FR-11: Frequently Asked Questions</h4>
+      <p>The system shall provide reusable, accessible FAQ components supporting category and page-level questions.</p>
+
+      <h4>FR-12: Navigation</h4>
+      <p>The system shall provide header, mobile, and footer navigation, nested-page breadcrumbs, active-page indication, and links to service and contact pages.</p>
+
+      <h4>FR-13: Search</h4>
+      <p>Site search should be provided when navigation becomes inefficient. Results shall be relevant, exclude unpublished content, and state when no result is found.</p>
+
+      <h4>FR-14: CMS Administration</h4>
+      <p>Authorized administrators shall create, edit, preview, publish, and archive pages, services, locations, testimonials, and media, and update navigation, contact details, and business hours.</p>
+
+      <h4>FR-15: SEO and Social Metadata</h4>
+      <p>The system shall support unique titles and descriptions, canonical URLs, Open Graph metadata, LocalBusiness or ProfessionalService schema, breadcrumb and approved FAQ schema, XML sitemap, robots configuration, and image alt text.</p>
+
+      <h4>FR-16: Analytics</h4>
+      <p>The system shall track where consent permits: quote-form starts and submissions, telephone and email clicks, and key service-page views. Tracking controls shall be respected.</p>
+
+      <h4>FR-17: Privacy and Consent</h4>
+      <p>The system shall provide a Privacy Policy, analytics or cookie notice when needed, legal consent controls, and a footer privacy link.</p>
+
+      <h4>FR-18: Error Pages</h4>
+      <p>The system shall provide branded 404 and generic unavailable pages with navigation and contact options.</p>
+
+      <h3>3.2 External Interface Requirements</h3>
+      <h4>3.2.1 User Interfaces</h4>
+      <ul>
+        <li>Branding shall use a consistent blue/green palette unless replaced by an approved brand guide.</li>
+        <li>Typography shall remain readable across breakpoints.</li><li>Links and controls shall include visible keyboard focus.</li>
+        <li>Form validation shall be understandable and accessible.</li>
+        <li>Call buttons shall remain discoverable on mobile devices.</li>
+        <li>The layout shall avoid horizontal scrolling at supported widths.</li>
+      </ul>
+      <h4>3.2.2 Hardware Interfaces</h4><p>No direct hardware interfaces are required.</p>
+      <h4>3.2.3 Software Interfaces</h4>
+      <table><thead><tr><th>Interface</th><th>Purpose</th></tr></thead><tbody>
+        <tr><td>SMTP or transactional email provider</td><td>Send inquiry notifications and confirmations</td></tr>
+        <tr><td>Analytics provider</td><td>Aggregate website measurement</td></tr>
+        <tr><td>Map provider</td><td>Optional embedded map</td></tr>
+        <tr><td>CMS or database</td><td>Manage and persist website content</td></tr>
+        <tr><td>Form spam service</td><td>Detect automated or abusive submissions</td></tr>
+      </tbody></table>
+      <h4>3.2.4 Communications Interfaces</h4>
+      <ul><li>HTTPS for all public traffic</li><li>REST or server-side form submission</li><li>Authenticated email delivery</li><li>Optional DNS, CDN, and caching integration</li></ul>
+
+      <h3>3.3 Non-Functional Requirements</h3>
+      <h4>NFR-01: Performance</h4>
+      <p>Core content shall become visible within two seconds on a representative broadband connection. Largest Contentful Paint shall be below 2.5 seconds, Cumulative Layout Shift below 0.1, and Interaction to Next Paint below 200 milliseconds at the 75th percentile. Images shall be compressed and served in modern formats.</p>
+
+      <h4>NFR-02: Availability</h4>
+      <p>Public pages shall target 99.9 percent monthly availability, excluding planned maintenance. Hosting shall provide monitored backups and recovery procedures.</p>
+
+      <h4>NFR-03: Scalability</h4>
+      <p>The system shall support at least 500 concurrent users and expected marketing traffic peaks.</p>
+
+      <h4>NFR-04: Security</h4>
+      <p>The system shall use HTTPS, strong authenticated administration, authorization controls, login throttling, server-side form validation, protected secrets, dependency scanning, a retention schedule, and private customer submissions.</p>
+
+      <h4>NFR-05: Accessibility</h4>
+      <p>The website shall conform to WCAG 2.1 Level AA, support keyboard and assistive technologies, and provide meaningful names, alternatives, contrast, and accessible form errors.</p>
+
+      <h4>NFR-06: SEO</h4>
+      <p>The system shall use semantic headings, short descriptive URLs, descriptive links, synchronized sitemap updates, and non-duplicated location and service content.</p>
+
+      <h4>NFR-07: Usability</h4>
+      <p>A visitor shall reach the quote form within two clicks. Contact actions shall remain visible, mobile navigation shall work with one hand, and validation shall be clear and corrective.</p>
+
+      <h4>NFR-08: Maintainability</h4>
+      <p>The project shall use version control, environment-specific configuration, repeatable deployment, documented administration, and isolated third-party integrations.</p>
+
+      <h4>NFR-09: Compatibility</h4>
+      <p>The system shall support current and previous major releases of Chrome, Safari, Firefox, Edge, Android Chrome, and Mobile Safari.</p>
+
+      <h4>NFR-10: Backup and Recovery</h4>
+      <p>Website data shall be backed up daily and retained according to agreement. Recovery procedures shall be tested, with a critical restore achievable within four hours.</p>
+
+      <h4>NFR-11: Privacy</h4>
+      <p>The system shall collect only necessary information, keep inquiries private, disclose third-party purposes, and support approved data-removal requests.</p>
+    </section>
+
+    <section id="data">
+      <h2>4. Data Requirements</h2>
+      <h3>4.1 Key Entities</h3>
+      <table><thead><tr><th>Entity</th><th>Required Attributes</th></tr></thead><tbody>
+        <tr><td>Service</td><td>ID, title, slug, category, description, status</td></tr>
+        <tr><td>Location</td><td>ID, name, region, postal areas, description, status</td></tr>
+        <tr><td>Inquiry</td><td>ID, name, contact information, service, address area, message, status, created date</td></tr>
+        <tr><td>Testimonial</td><td>ID, customer name or alias, content, service, location, status</td></tr>
+        <tr><td>Media</td><td>ID, file, alternative text, usage, status</td></tr>
+        <tr><td>Page</td><td>ID, title, slug, content, metadata, publication status</td></tr>
+      </tbody></table>
+      <h3>4.2 Inquiry Retention</h3>
+      <p>Retention shall be defined before launch. A reasonable default is 24 months from the last activity, subject to applicable law and business policy.</p>
+    </section>
+
+    <section id="acceptance">
+      <h2>5. Acceptance Criteria</h2>
+      <ul>
+        <li>Home, About, services, locations, contact, privacy, and error pages are complete.</li>
+        <li>Every implemented service and location is supported by confirmed business information.</li>
+        <li>All links and calls to action point to valid destinations.</li>
+        <li>The quote form validates, submits, notifies staff, and shows confirmation.</li>
+        <li>Spam protection is active.</li><li>Responsive checks pass from 320 to 1920 pixels.</li>
+        <li>Core pages pass WCAG 2.1 Level AA automated and manual checks.</li>
+        <li>Metadata, sitemap, robots, and canonical URLs are configured.</li>
+        <li>Analytics and consent behavior are verified.</li>
+        <li>HTTPS and security headers are active.</li>
+        <li>Production backup and restore testing is complete.</li>
+        <li>Performance targets pass in representative testing.</li>
+        <li>Search, duplicate, broken-link, and spam tests pass.</li>
+      </ul>
+    </section>
+
+    <section id="testing">
+      <h2>6. Verification and Testing</h2>
+      <table><thead><tr><th>Test Area</th><th>Verification Method</th></tr></thead><tbody>
+        <tr><td>Navigation</td><td>Manual desktop and mobile testing</td></tr>
+        <tr><td>Forms</td><td>Valid, invalid, duplicate, and spam submissions</td></tr>
+        <tr><td>Responsive layout</td><td>Browser and viewport testing</td></tr>
+        <tr><td>Accessibility</td><td>Automated, keyboard, and screen-reader testing</td></tr>
+        <tr><td>Performance</td><td>Lighthouse and WebPageTest measurements</td></tr>
+        <tr><td>SEO</td><td>Crawl, metadata, sitemap, and schema validation</td></tr>
+        <tr><td>Security</td><td>Dependency scan, penetration smoke test, HTTPS and header review</td></tr>
+        <tr><td>Administration</td><td>CRUD, permissions, preview, and publish testing</td></tr>
+        <tr><td>Email</td><td>Notification and confirmation delivery testing</td></tr>
+        <tr><td>Recovery</td><td>Backup restore simulation</td></tr>
+        <tr><td>Analytics</td><td>Event and consent testing</td></tr>
+      </tbody></table>
+    </section>
+
+    <section id="release">
+      <h2>7. Release Priorities</h2>
+      <h3>Priority 1 — Launch</h3>
+      <p>Home, About, core services, contact and quote forms, CTAs, privacy policy, mobile responsiveness, HTTPS, basic SEO, and core accessibility.</p>
+      <h3>Priority 2 — Expansion</h3>
+      <p>Location pages, expanded services, testimonials, gallery, FAQ, and analytics dashboard integration.</p>
+      <h3>Priority 3 — Future</h3>
+      <p>Online scheduling, customer portal, technician tracking, payments, CRM integration, review aggregation, and live chat.</p>
+    </section>
+
+    <section id="open-items">
+      <h2>8. Open Items Requiring Confirmation</h2>
+      <table><thead><tr><th>Item</th><th>Required Decision</th></tr></thead><tbody>
+        <tr><td>Company details</td><td>Legal name, operating name, address, and phone</td></tr>
+        <tr><td>Service scope</td><td>Exact HVAC and appliance services offered</td></tr>
+        <tr><td>Brands</td><td>Appliance and HVAC brands supported</td></tr>
+        <tr><td>Service area</td><td>Confirmed cities and postal-code coverage</td></tr>
+        <tr><td>Pricing</td><td>Flat fees, service-call fees, or quote-only model</td></tr>
+        <tr><td>Service call</td><td>Whether repairs include free or paid service calls</td></tr>
+        <tr><td>Emergency service</td><td>Availability, hours, and response guarantee</td></tr>
+        <tr><td>Commercial service</td><td>Scope and industries supported</td></tr>
+        <tr><td>Reviews</td><td>Approved testimonials and review-policy links</td></tr>
+        <tr><td>Branding</td><td>Logo, colors, fonts, and photography</td></tr>
+        <tr><td>Team</td><td>Authorized staff profiles and credentials</td></tr>
+        <tr><td>Contact workflow</td><td>Inbox, response time, and escalation process</td></tr>
+        <tr><td>CMS</td><td>Preferred platform and hosting provider</td></tr>
+        <tr><td>Domain</td><td>DNS ownership and email configuration</td></tr>
+        <tr><td>Analytics</td><td>Provider and consent requirements</td></tr>
+      </tbody></table>
+    </section>
+  </main>
+</div>
+</body>
+</html>
