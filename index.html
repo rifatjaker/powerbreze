@@ -5,47 +5,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>PowerBreeze - Website Requirements Specification</title>
   <style>
-    :root { --navy: #16324f; --blue: #2878b8; --green: #61b15a; --light: #f3f7fa; --border: #d7e1e8; }
+    :root {
+      --navy: #102a43; --blue: #2878b8; --cyan: #2ea7c7; --green: #61b15a;
+      --ink: #24313d; --muted: #667785; --light: #f3f7fa; --card: #ffffff;
+      --border: #d7e1e8; --soft-blue: #edf6fb; --shadow: 0 12px 35px rgba(16,42,67,.09);
+    }
+    [data-theme="dark"] {
+      --navy: #e7f1f8; --blue: #77b9ea; --cyan: #67cade; --green: #82c97b;
+      --ink: #dce7ef; --muted: #9eb0bf; --light: #132333; --card: #172936;
+      --border: #304757; --soft-blue: #1d384b; --shadow: 0 12px 35px rgba(0,0,0,.22);
+    }
     * { box-sizing: border-box; }
-    body { margin: 0; color: #24313d; background: #fff; font: 15px/1.6 Arial, sans-serif; }
-    .layout { display: grid; grid-template-columns: 280px minmax(0, 920px); max-width: 1200px; margin: 0 auto; }
-    nav { position: sticky; top: 0; align-self: start; height: 100vh; overflow: auto; padding: 30px 24px; background: var(--light); border-right: 1px solid var(--border); }
-    nav h2 { margin: 0 0 16px; color: var(--navy); font-size: 20px; }
-    nav ol { margin: 0; padding-left: 20px; }
-    nav li { margin: 5px 0; }
-    nav a { color: var(--blue); text-decoration: none; }
-    nav a:hover { text-decoration: underline; }
-    main { padding: 48px 60px 80px; }
-    header { padding-bottom: 24px; border-bottom: 4px solid var(--green); }
-    h1 { margin: 0; color: var(--navy); font-size: 36px; line-height: 1.2; }
-    h2 { margin-top: 42px; color: var(--navy); border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-    h3 { margin-top: 26px; color: #245b82; }
-    table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; }
-    th, td { border: 1px solid var(--border); padding: 9px 12px; text-align: left; vertical-align: top; }
-    th { background: var(--navy); color: #fff; }
-    tr:nth-child(even) td { background: #f8fafb; }
-    code { background: var(--light); padding: 2px 5px; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--card); font: 15px/1.68 Inter, "Segoe UI", Arial, sans-serif; transition: background .25s, color .25s; }
     a { color: var(--blue); }
-    .meta { margin-top: 16px; }
+    #progress { position: fixed; z-index: 1000; left: 0; top: 0; height: 4px; width: 0; background: linear-gradient(90deg, var(--green), var(--cyan), var(--blue)); transition: width .08s linear; }
+    .layout { display: grid; grid-template-columns: 300px minmax(0, 980px); max-width: 1280px; margin: 0 auto; }
+    nav {
+      position: sticky; top: 0; align-self: start; height: 100vh; overflow: auto;
+      padding: 26px 22px; background: var(--light); border-right: 1px solid var(--border);
+    }
+    .brand { display: flex; align-items: center; gap: 11px; margin-bottom: 18px; }
+    .brand-mark { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; color: #fff; font-weight: 800; background: linear-gradient(135deg, var(--cyan), var(--green)); box-shadow: var(--shadow); }
+    .brand strong { color: var(--navy); display: block; line-height: 1.1; }
+    .brand small { color: var(--muted); }
+    #docSearch { width: 100%; border: 1px solid var(--border); background: var(--card); color: var(--ink); border-radius: 10px; padding: 10px 12px; outline: none; margin-bottom: 10px; }
+    #docSearch:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(40,120,184,.12); }
+    nav h2 { margin: 10px 0 8px; color: var(--navy); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
+    nav ol { margin: 0; padding: 0; list-style: none; }
+    nav li { margin: 3px 0; }
+    nav a { display: block; border-left: 3px solid transparent; color: var(--muted); text-decoration: none; padding: 7px 9px; border-radius: 7px; transition: .18s ease; }
+    nav a:hover { color: var(--blue); background: var(--soft-blue); }
+    nav a.active { color: var(--blue); border-left-color: var(--green); background: var(--soft-blue); font-weight: 700; }
+    .nav-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+    .tool-button { border: 1px solid var(--border); background: var(--card); color: var(--ink); border-radius: 9px; padding: 9px; cursor: pointer; font-weight: 700; }
+    .tool-button:hover { border-color: var(--blue); color: var(--blue); }
+    main { min-width: 0; padding: 42px 64px 90px; }
+    header { position: relative; overflow: hidden; margin-bottom: 34px; padding: 38px 42px 28px; border: 1px solid var(--border); border-radius: 20px; background: linear-gradient(135deg, var(--soft-blue), var(--card)); box-shadow: var(--shadow); }
+    header::after { content: ""; position: absolute; width: 240px; height: 240px; right: -120px; top: -150px; border-radius: 50%; background: rgba(46,167,199,.12); }
+    .eyebrow { color: var(--green); font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { margin: 7px 0 8px; color: var(--navy); font-size: clamp(30px, 5vw, 48px); line-height: 1.12; }
+    header > p { color: var(--muted); font-size: 17px; }
+    h2 { margin-top: 46px; color: var(--navy); border-bottom: 1px solid var(--border); padding-bottom: 10px; scroll-margin-top: 20px; }
+    h3 { margin-top: 28px; color: var(--blue); scroll-margin-top: 20px; }
+    h4 { margin: 24px 0 6px; padding: 10px 12px; border-left: 4px solid var(--green); border-radius: 0 8px 8px 0; background: var(--soft-blue); color: var(--navy); }
+    table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; box-shadow: 0 4px 18px rgba(16,42,67,.04); }
+    th, td { border: 1px solid var(--border); padding: 10px 12px; text-align: left; vertical-align: top; }
+    th { background: var(--navy); color: var(--card); }
+    [data-theme="dark"] th { color: #102a43; }
+    tr:nth-child(even) td { background: var(--light); }
+    ul { padding-left: 21px; } li::marker { color: var(--green); }
+    .meta { margin-top: 18px; box-shadow: none; }
     .status { display: inline-block; background: #fff3cd; color: #6b5700; border-radius: 20px; padding: 4px 10px; font-weight: bold; }
-    @media (max-width: 800px) {
+    section { opacity: 1; }
+    section.reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease; }
+    section.reveal.visible { opacity: 1; transform: none; }
+    .search-match { background: #ffe7a3; color: #2b260f; border-radius: 3px; padding: 0 2px; }
+    [data-theme="dark"] .search-match { background: #6b5510; color: #fff4bc; }
+    .no-results { display: none; border: 1px dashed var(--border); border-radius: 12px; padding: 20px; text-align: center; color: var(--muted); }
+    #backToTop { position: fixed; right: 24px; bottom: 24px; width: 46px; height: 46px; border: 0; border-radius: 50%; background: var(--navy); color: var(--card); box-shadow: var(--shadow); cursor: pointer; opacity: 0; transform: translateY(12px); transition: .2s; z-index: 20; }
+    [data-theme="dark"] #backToTop { color: #102a43; }
+    #backToTop.show { opacity: 1; transform: none; }
+    @media (max-width: 900px) {
       .layout { display: block; }
-      nav { position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--border); }
-      main { padding: 32px 20px 60px; }
-      h1 { font-size: 28px; }
+      nav { position: sticky; z-index: 50; height: auto; max-height: 60vh; border-right: 0; border-bottom: 1px solid var(--border); }
+      .brand { margin-bottom: 10px; }
+      nav h2, nav ol { display: none; }
+      nav.search-open h2, nav.search-open ol { display: block; }
+      main { padding: 28px 18px 70px; }
+      header { padding: 26px 22px 20px; }
     }
     @media print {
-      nav { display: none; }
+      #progress, nav, #backToTop { display: none; }
       .layout { display: block; }
       main { max-width: none; padding: 20px; }
-      h2 { break-after: avoid; }
-      table { break-inside: avoid; }
+      header { box-shadow: none; }
+      h2, h3, h4 { break-after: avoid; }
+      table { break-inside: avoid; box-shadow: none; }
     }
   </style>
 </head>
 <body>
+<div id="progress" aria-hidden="true"></div>
 <div class="layout">
-  <nav aria-label="Table of contents">
+  <nav aria-label="Table of contents" id="sidebar">
+    <div class="brand">
+      <span class="brand-mark">PB</span>
+      <span><strong>PowerBreeze</strong><small>Requirements Portal</small></span>
+    </div>
+    <input id="docSearch" type="search" placeholder="Search requirements..." aria-label="Search document">
     <h2>Contents</h2>
     <ol>
       <li><a href="#introduction">Introduction</a></li>
@@ -57,10 +105,15 @@
       <li><a href="#release">Release Priorities</a></li>
       <li><a href="#open-items">Open Items</a></li>
     </ol>
+    <div class="nav-tools">
+      <button class="tool-button" id="themeToggle" type="button" aria-label="Toggle dark mode">Dark mode</button>
+      <button class="tool-button" id="printDocument" type="button">Print / PDF</button>
+    </div>
   </nav>
 
   <main>
     <header>
+      <div class="eyebrow">Project specification · V1.0</div>
       <h1>Website Requirements Specification</h1>
       <p><strong>PowerBreeze HVAC and Appliance Services Website</strong></p>
       <table class="meta">
@@ -74,6 +127,7 @@
         </tbody>
       </table>
     </header>
+    <div class="no-results" id="noResults">No matching requirements found.</div>
 
     <section id="introduction">
       <h2>1. Introduction</h2>
@@ -374,5 +428,71 @@
     </section>
   </main>
 </div>
+<button id="backToTop" type="button" aria-label="Back to top">↑</button>
+<script>
+  const root = document.documentElement;
+  const sidebar = document.getElementById("sidebar");
+  const search = document.getElementById("docSearch");
+  const progress = document.getElementById("progress");
+  const backToTop = document.getElementById("backToTop");
+  const noResults = document.getElementById("noResults");
+
+  const savedTheme = localStorage.getItem("powerbreeze-theme");
+  if (savedTheme === "dark") root.dataset.theme = "dark";
+
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    const dark = root.dataset.theme !== "dark";
+    if (dark) root.dataset.theme = "dark";
+    else delete root.dataset.theme;
+    localStorage.setItem("powerbreeze-theme", dark ? "dark" : "light");
+  });
+
+  document.getElementById("printDocument").addEventListener("click", () => window.print());
+
+  function updateProgress() {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const percent = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+    progress.style.width = percent + "%";
+    backToTop.classList.toggle("show", window.scrollY > 600);
+  }
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  updateProgress();
+  backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+  const sections = [...document.querySelectorAll("main section")];
+  const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        document.querySelectorAll("nav a").forEach(link => {
+          link.classList.toggle("active", link.getAttribute("href") === "#" + entry.target.id);
+        });
+      }
+    });
+  }, { rootMargin: "-20% 0px -65% 0px", threshold: 0 });
+  sections.forEach(section => { section.classList.add("reveal"); sectionObserver.observe(section); });
+
+  search.addEventListener("input", () => {
+    const query = search.value.trim().toLowerCase();
+    sidebar.classList.toggle("search-open", query.length > 0);
+    let matches = 0;
+    sections.forEach(section => {
+      const text = section.textContent.toLowerCase();
+      const visible = !query || text.includes(query);
+      section.style.display = visible ? "" : "none";
+      if (visible) matches++;
+      section.querySelectorAll(".search-match").forEach(mark => mark.replaceWith(mark.textContent));
+      if (query && visible) {
+        section.querySelectorAll("h2,h3,h4,p,td,li").forEach(node => {
+          if (!node.children.length) {
+            const regex = new RegExp("(" + query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi");
+            node.innerHTML = node.textContent.replace(regex, "<mark class='search-match'>$1</mark>");
+          }
+        });
+      }
+    });
+    noResults.style.display = query && matches === 0 ? "block" : "none";
+  });
+</script>
 </body>
 </html>
