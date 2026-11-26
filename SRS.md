@@ -115,6 +115,16 @@ The website is a standalone public-facing company and capability site. It will i
 - Third-party scripts must not block meaningful page rendering.
 - License, certification, enlistment, project, and client information must be approved and substantiated before publication.
 
+### 2.6 Technology Architecture
+
+- Frontend: React with Vite, TypeScript, and Tailwind CSS.
+- Backend: PHP 8 REST API.
+- Database: MySQL 8.
+- Admin authentication: JWT access token issued by the API, stored in the browser session, and sent in the `Authorization: Bearer <token>` request header. Protected API routes shall validate token signature, expiry, issuer, and administrator role.
+- The frontend shall use a centralized API client to attach the authorization header to authenticated requests.
+- Passwords shall be stored only as PHP password hashes. JWT signing secrets and database credentials shall be provided through server environment configuration and shall never be bundled into the frontend.
+- Public visitors may read published services, products, and projects and submit inquiries. Content mutations and inquiry access shall require an authenticated administrator.
+
 ## 3. Specific Requirements
 
 ## 3.1 Functional Requirements

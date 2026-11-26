@@ -224,6 +224,17 @@
         <li>Third-party scripts must not block meaningful page rendering.</li>
         <li>Project details, client identities, and tender content must be approved before public display.</li>
       </ul>
+
+      <h3>2.6 Technology Architecture</h3>
+      <ul>
+        <li>Frontend: React with Vite, TypeScript, and Tailwind CSS.</li>
+        <li>Backend: PHP 8 REST API.</li>
+        <li>Database: MySQL 8.</li>
+        <li>Admin authentication: JWT access token stored for the browser session and sent using the <code>Authorization: Bearer &lt;token&gt;</code> header. Protected routes shall validate token signature, expiry, issuer, and administrator role.</li>
+        <li>The frontend shall use a centralized API client to attach authentication headers to protected requests.</li>
+        <li>Passwords shall use PHP password hashes. JWT signing secrets and database credentials shall remain server-side and out of the frontend bundle.</li>
+        <li>Public visitors may read published services, products, and projects and submit inquiries. Mutations and inquiry access shall require an authenticated administrator.</li>
+      </ul>
     </section>
 
     <section id="requirements">
