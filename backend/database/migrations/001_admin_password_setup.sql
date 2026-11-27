@@ -1,0 +1,3 @@
+ALTER TABLE admins
+  ADD COLUMN must_change_password TINYINT(1) NOT NULL DEFAULT 1,
+  ADD COLUMN auth_version INT UNSIGNED NOT NULL DEFAULT 1;

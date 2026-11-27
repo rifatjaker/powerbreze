@@ -42,7 +42,7 @@ function login_admin(array $input): void
         json_response(429, ['error' => 'Too many sign-in attempts. Try again later.']);
     }
 
-    $query = $pdo->prepare('SELECT id, email, password_hash, role FROM admins WHERE email = ? AND is_active = 1 LIMIT 1');
+    $query = $pdo->prepare('SELECT id, email, password_hash, role, must_change_password, auth_version FROM admins WHERE email = ? AND is_active = 1 LIMIT 1');
     $query->execute([$email]);
     $admin = $query->fetch();
 
@@ -69,13 +69,21 @@ function login_admin(array $input): void
         'sub' => (string) $admin['id'],
         'email' => $admin['email'],
         'role' => $admin['role'],
+        'ver' => (int) $admin['auth_version'],
+        'must_change_password' => (bool) $admin['must_change_password'],
     ];
 
     $token = JWT::encode($payload, $secret, 'HS256');
-    json_response(200, ['data' => ['token' => $token, 'expires_in' => $ttl]]);
+    json_response(200, [
+        'data' => [
+            'token' => $token,
+            'expires_in' => $ttl,
+            'must_change_password' => (bool) $admin['must_change_password'],
+        ],
+    ]);
 }
 
-function require_admin(): array
+function authenticated_admin(bool $allowPasswordChange = false): array
 {
     $headers = function_exists('getallheaders') ? getallheaders() : [];
     $authorization = $headers['Authorization'] ?? $headers['authorization'] ?? $_SERVER['HTTP_AUTHORIZATION'] ?? '';
@@ -92,9 +100,84 @@ function require_admin(): array
     }
 
     $expectedIssuer = config_value('JWT_ISSUER', 'powerbreeze-api');
-    if (($claims->iss ?? null) !== $expectedIssuer || ($claims->role ?? null) !== 'admin' || !isset($claims->sub)) {
+    $id = filter_var($claims->sub ?? null, FILTER_VALIDATE_INT);
+    if (($claims->iss ?? null) !== $expectedIssuer || ($claims->role ?? null) !== 'admin' || !$id) {
         json_response(401, ['error' => 'The authentication token is invalid.']);
     }
 
-    return ['id' => (int) $claims->sub, 'email' => (string) ($claims->email ?? '')];
+    $query = db()->prepare('SELECT id, email, role, is_active, must_change_password, auth_version FROM admins WHERE id = ? LIMIT 1');
+    $query->execute([$id]);
+    $admin = $query->fetch();
+    if (
+        !$admin
+        || !(bool) $admin['is_active']
+        || $admin['role'] !== 'admin'
+        || (int) ($claims->ver ?? -1) !== (int) $admin['auth_version']
+    ) {
+        json_response(401, ['error' => 'The authentication token is invalid. Sign in again.']);
+    }
+
+    $mustChangePassword = (bool) $admin['must_change_password']
+        || (bool) ($claims->must_change_password ?? false);
+    if ($mustChangePassword && !$allowPasswordChange) {
+        json_response(403, [
+            'error' => 'Change your password before continuing.',
+            'code' => 'PASSWORD_CHANGE_REQUIRED',
+        ]);
+    }
+
+    return [
+        'id' => (int) $admin['id'],
+        'email' => (string) $admin['email'],
+        'must_change_password' => $mustChangePassword,
+        'auth_version' => (int) $admin['auth_version'],
+    ];
+}
+
+function require_admin(): array
+{
+    $admin = authenticated_admin();
+    return ['id' => $admin['id'], 'email' => $admin['email']];
+}
+
+function change_admin_password(): void
+{
+    if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+        json_response(405, ['error' => 'Method not allowed.']);
+    }
+
+    $admin = authenticated_admin(true);
+    if (!$admin['must_change_password']) {
+        json_response(409, ['error' => 'A first-login password change is not required.']);
+    }
+
+    $input = request_json();
+    $currentPassword = (string) ($input['current_password'] ?? '');
+    $newPassword = (string) ($input['new_password'] ?? '');
+    if ($currentPassword === '' || strlen($newPassword) < 12 || strlen($newPassword) > 1024) {
+        json_response(422, ['error' => 'Enter your current password and a new password of at least 12 characters.']);
+    }
+    if (hash_equals($currentPassword, $newPassword)) {
+        json_response(422, ['error' => 'Choose a new password different from your temporary password.']);
+    }
+
+    $pdo = db();
+    $query = $pdo->prepare('SELECT password_hash FROM admins WHERE id = ? AND is_active = 1 LIMIT 1');
+    $query->execute([$admin['id']]);
+    $passwordHash = $query->fetchColumn();
+    if (!is_string($passwordHash) || !password_verify($currentPassword, $passwordHash)) {
+        json_response(401, ['error' => 'The current password is incorrect.']);
+    }
+
+    $update = $pdo->prepare(
+        'UPDATE admins
+         SET password_hash = ?, must_change_password = 0, auth_version = auth_version + 1
+         WHERE id = ? AND auth_version = ? AND must_change_password = 1'
+    );
+    $update->execute([password_hash($newPassword, PASSWORD_DEFAULT), $admin['id'], $admin['auth_version']]);
+    if ($update->rowCount() !== 1) {
+        json_response(409, ['error' => 'The admin account changed. Sign in again.']);
+    }
+
+    json_response(200, ['data' => ['password_changed' => true, 'sign_in_again' => true]]);
 }

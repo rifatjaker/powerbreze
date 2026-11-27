@@ -1,5 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL ?? "/api/index.php";
 const TOKEN_KEY = "pb-admin-token";
+const PASSWORD_CHANGE_KEY = "pb-admin-password-change";
 
 type ApiEnvelope<T> = {
   data: T;
@@ -18,8 +19,15 @@ export class ApiError extends Error {
 
 export const authToken = {
   get: () => sessionStorage.getItem(TOKEN_KEY),
-  set: (token: string) => sessionStorage.setItem(TOKEN_KEY, token),
-  clear: () => sessionStorage.removeItem(TOKEN_KEY),
+  requiresPasswordChange: () => sessionStorage.getItem(PASSWORD_CHANGE_KEY) === "true",
+  set: (token: string, requiresPasswordChange = false) => {
+    sessionStorage.setItem(TOKEN_KEY, token);
+    sessionStorage.setItem(PASSWORD_CHANGE_KEY, String(requiresPasswordChange));
+  },
+  clear: () => {
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(PASSWORD_CHANGE_KEY);
+  },
 };
 
 export async function apiRequest<T>(
@@ -28,13 +36,14 @@ export async function apiRequest<T>(
 ): Promise<T> {
   const { action, headers, ...requestOptions } = options;
   const token = authToken.get();
+  const isFormData = typeof FormData !== "undefined" && requestOptions.body instanceof FormData;
   const response = await fetch(
     `${API_URL}?resource=${encodeURIComponent(resource)}${action ? `&action=${encodeURIComponent(action)}` : ""}`,
     {
       ...requestOptions,
       headers: {
         Accept: "application/json",
-        ...(requestOptions.body ? { "Content-Type": "application/json" } : {}),
+        ...(requestOptions.body && !isFormData ? { "Content-Type": "application/json" } : {}),
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...headers,
       },

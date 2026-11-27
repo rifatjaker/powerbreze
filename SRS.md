@@ -57,8 +57,7 @@ The following are not included unless added by a change request:
 
 ### 1.4 References
 
-- [Current company website](http://powerbreezebd.net/)
-- [Planned website domain](https://powerbreeze.ca/)
+- [Company website](https://powerbreeze.ca/)
 - Applicable Bangladesh privacy, cybersecurity, and procurement requirements (to be confirmed)
 - Canadian privacy and anti-spam requirements where the Canada office or Canadian audiences are in scope
 - WCAG 2.1 Level AA
@@ -120,7 +119,8 @@ The website is a standalone public-facing company and capability site. It will i
 - Frontend: React with Vite, TypeScript, and Tailwind CSS.
 - Backend: PHP 8 REST API.
 - Database: MySQL 8.
-- Admin authentication: JWT access token issued by the API, stored in the browser session, and sent in the `Authorization: Bearer <token>` request header. Protected API routes shall validate token signature, expiry, issuer, and administrator role.
+- Admin authentication: JWT access token issued by the API, stored in the browser session, and sent in the `Authorization: Bearer <token>` request header. Protected API routes shall validate token signature, expiry, issuer, administrator role, and account authentication version.
+- The initial administrator password shall require a change on first sign-in. Until changed, the administrator shall only be able to access the password-change flow. After a successful change, the session shall be invalidated and the administrator shall sign in again with the new password.
 - The frontend shall use a centralized API client to attach the authorization header to authenticated requests.
 - Passwords shall be stored only as PHP password hashes. JWT signing secrets and database credentials shall be provided through server environment configuration and shall never be bundled into the frontend.
 - Public visitors may read published services, products, and projects and submit inquiries. Content mutations and inquiry access shall require an authenticated administrator.
@@ -190,11 +190,13 @@ The website shall provide a product catalogue grouped by category. The current c
 - Passenger and bed elevators
 - Transformers, distribution boxes, synchronizing/common-bus panels, solar power systems, and diesel engine generators
 
-Each product record shall support a name, category, description, images, key specifications when verified, supply/availability notes, and inquiry CTA. The website shall not provide online purchasing unless explicitly approved in a future release.
+Each product record shall support a name, category, description, images, key specifications when verified, supply/availability notes, and inquiry CTA. Administrators shall be able to upload product images. The homepage shall show a curated preview with a link to the complete, category-filterable catalogue. The website shall not provide online purchasing unless explicitly approved in a future release.
 
 ### FR-05: Projects and Experience
 
 The system shall provide a searchable or filterable portfolio of company projects. It may show project title, client/sector, location, scope, capacity or voltage where approved, completion period, project description, and approved imagery. The administrator shall be able to publish, edit, categorize, and archive project records. Confidential project details and client identities shall not be published without authorization.
+
+The site shall also provide a database-managed project photo gallery. Administrators shall be able to upload, caption, order, publish, and remove gallery images. Public gallery results shall be paginated, with no more than 12 images shown per page.
 
 ### FR-06: Clients and Enlistments
 
@@ -204,9 +206,11 @@ The system may display government and private-sector clients, procurement enlist
 
 The system shall display confirmed office addresses and contact details, including the Dhaka head office and any currently operated local or Canada offices. Geographic coverage shall be based on company confirmation; the website shall not create unsupported local-service claims or duplicate thin location pages.
 
+Administrators shall be able to configure the company’s Facebook, YouTube, Twitter/X, LinkedIn, and Instagram profile URLs. The public footer shall show icons only for configured social links, alongside the company email link.
+
 The existing company website currently lists the following details, which shall be reconfirmed before launch:
 
-- Dhaka head office: Dr. Nawab Ali Tower, Suite #501E, 24/A Purana Paltan, Dhaka-1000, Bangladesh; +88-02-9585474; +8801711520071; info@powerbreezebd.net
+- Dhaka head office: Dr. Nawab Ali Tower, Suite #501E, 24/A Purana Paltan, Dhaka-1000, Bangladesh; +88-02-9585474; +8801711520071; info@powerbreeze.ca
 - Local office: 438 Abedin Market (3rd Floor), Noyapara, Sonirakhra, P.O. Dania, P.S. Jatrabari, Dhaka-1236; +8801819244217; ripon_218@yahoo.com
 - Canada office: Suite 31, Workplace K Ltd, 1940 Eglinton Ave East, Scarborough, ON M1L 4R1, Toronto, Canada; +1 (647) 332-4217; +1 (647) 858-5225
 

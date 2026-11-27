@@ -12,8 +12,27 @@ try {
         login_admin(request_json());
     }
 
+    if ($resource === 'auth' && $action === 'change-password') {
+        change_admin_password();
+    }
+
     if ($resource === 'auth' && $action === 'me' && $method === 'GET') {
         json_response(200, ['data' => require_admin()]);
+    }
+
+    $imageCollection = [
+        'project-images' => 'projects',
+        'service-images' => 'services',
+        'product-images' => 'products',
+        'client-images' => 'clients',
+        'gallery-images' => 'gallery',
+    ][$resource] ?? null;
+    if ($imageCollection !== null) {
+        if ($method !== 'POST') {
+            json_response(405, ['error' => 'Method not allowed.']);
+        }
+        require_admin();
+        upload_content_image($imageCollection);
     }
 
     $contentResources = [
@@ -21,10 +40,17 @@ try {
             'table' => 'company_settings',
             'columns' => [
                 'company_name', 'tagline', 'founded_year', 'about_intro', 'about_body', 'email',
+                'profile_summary', 'profile_leadership', 'profile_credentials', 'profile_capabilities',
+                'facebook_url', 'youtube_url', 'twitter_url', 'linkedin_url', 'instagram_url',
                 'whatsapp_phone', 'office_bd_address', 'office_bd_phone', 'office_local_address',
-                'office_local_phone', 'office_ca_address', 'office_ca_phone',
+                'office_bd_mobile', 'office_bd_fax', 'office_local_phone', 'office_ctg_address',
+                'office_factory_address', 'office_ca_address', 'office_ca_phone',
             ],
-            'required' => ['company_name', 'tagline', 'founded_year', 'about_intro', 'about_body', 'email', 'whatsapp_phone', 'office_bd_address', 'office_bd_phone'],
+            'required' => [
+                'company_name', 'tagline', 'founded_year', 'about_intro', 'about_body', 'email',
+                'profile_summary', 'profile_leadership', 'profile_credentials', 'profile_capabilities',
+                'whatsapp_phone', 'office_bd_address', 'office_bd_phone',
+            ],
         ],
         'services' => [
             'table' => 'services',
@@ -40,6 +66,16 @@ try {
             'table' => 'projects',
             'columns' => ['title', 'client', 'location', 'year', 'size', 'image', 'is_published'],
             'required' => ['title', 'client', 'location'],
+        ],
+        'clients' => [
+            'table' => 'clients',
+            'columns' => ['name', 'description', 'image', 'sort_order', 'is_published'],
+            'required' => ['name'],
+        ],
+        'gallery' => [
+            'table' => 'gallery_images',
+            'columns' => ['title', 'image', 'sort_order', 'is_published'],
+            'required' => ['title', 'image'],
         ],
     ];
 
@@ -69,6 +105,80 @@ function has_bearer_token(): bool
     return is_string($authorization) && str_starts_with(strtolower($authorization), 'bearer ');
 }
 
+function upload_content_image(string $collection): void
+{
+    $upload = $_FILES['image'] ?? null;
+    if (!is_array($upload)) {
+        json_response(422, ['error' => 'Choose an image to upload.']);
+    }
+
+    $uploadError = (int) ($upload['error'] ?? UPLOAD_ERR_NO_FILE);
+    if ($uploadError === UPLOAD_ERR_INI_SIZE || $uploadError === UPLOAD_ERR_FORM_SIZE) {
+        json_response(413, ['error' => 'Images must be 5 MB or smaller.']);
+    }
+    if ($uploadError !== UPLOAD_ERR_OK) {
+        json_response(422, ['error' => 'The image upload failed. Choose another image and try again.']);
+    }
+
+    $temporaryPath = $upload['tmp_name'] ?? null;
+    if (!is_string($temporaryPath) || !is_uploaded_file($temporaryPath)) {
+        json_response(422, ['error' => 'The uploaded image could not be verified.']);
+    }
+
+    $size = filesize($temporaryPath);
+    if (!is_int($size) || $size < 1) {
+        json_response(422, ['error' => 'The uploaded image is empty or unreadable.']);
+    }
+    if ($size > 5 * 1024 * 1024) {
+        json_response(413, ['error' => 'Images must be 5 MB or smaller.']);
+    }
+
+    $extensions = [
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/webp' => 'webp',
+    ];
+    $mime = (new finfo(FILEINFO_MIME_TYPE))->file($temporaryPath);
+    $imageInfo = @getimagesize($temporaryPath);
+    if (
+        !is_string($mime)
+        || !isset($extensions[$mime])
+        || !is_array($imageInfo)
+        || ($imageInfo['mime'] ?? null) !== $mime
+    ) {
+        json_response(422, ['error' => 'Use a valid JPG, PNG, or WebP image.']);
+    }
+
+    $uploadRoot = trim((string) config_value('PUBLIC_UPLOAD_DIR', ''));
+    if ($uploadRoot === '') {
+        $documentRoot = rtrim((string) ($_SERVER['DOCUMENT_ROOT'] ?? ''), DIRECTORY_SEPARATOR);
+        if ($documentRoot === '') {
+            throw new RuntimeException('The public document root is unavailable for image uploads.');
+        }
+        $uploadRoot = $documentRoot . DIRECTORY_SEPARATOR . 'uploads';
+    }
+    $uploadDirectory = $uploadRoot . DIRECTORY_SEPARATOR . $collection;
+
+    if (!is_dir($uploadDirectory) && !mkdir($uploadDirectory, 0755, true) && !is_dir($uploadDirectory)) {
+        error_log('[PowerBreeze API] Could not create the ' . $collection . ' image upload directory.');
+        json_response(500, ['error' => 'The server could not create the image directory.']);
+    }
+    if (!is_writable($uploadDirectory)) {
+        error_log('[PowerBreeze API] The ' . $collection . ' image upload directory is not writable.');
+        json_response(500, ['error' => 'The image directory is not writable by the server.']);
+    }
+
+    $fileName = bin2hex(random_bytes(16)) . '.' . $extensions[$mime];
+    if (!move_uploaded_file($temporaryPath, $uploadDirectory . DIRECTORY_SEPARATOR . $fileName)) {
+        error_log('[PowerBreeze API] Could not save an uploaded ' . $collection . ' image.');
+        json_response(500, ['error' => 'The server could not save the image. Check the upload directory permissions.']);
+    }
+
+    $publicBase = rtrim((string) config_value('PUBLIC_UPLOAD_URL', '/uploads'), '/')
+        . '/' . $collection;
+    json_response(201, ['data' => ['url' => $publicBase . '/' . $fileName]]);
+}
+
 function handle_content_resource(string $resource, array $definition, string $method, bool $isAdmin): void
 {
     $pdo = db();
@@ -82,7 +192,8 @@ function handle_content_resource(string $resource, array $definition, string $me
             json_response(200, ['data' => $company ? [$company] : []]);
         }
         $where = $isAdmin ? '' : ' WHERE is_published = 1';
-        $statement = $pdo->query("SELECT * FROM {$table}{$where} ORDER BY sort_order ASC, id DESC");
+        $orderBy = $resource === 'projects' ? 'id DESC' : 'sort_order ASC, id DESC';
+        $statement = $pdo->query("SELECT * FROM {$table}{$where} ORDER BY {$orderBy}");
         json_response(200, ['data' => $statement->fetchAll()]);
     }
 
@@ -96,7 +207,15 @@ function handle_content_resource(string $resource, array $definition, string $me
                     ? (filter_var($value, FILTER_VALIDATE_BOOLEAN) ? 1 : 0)
                     : ($value === null ? null : trim((string) $value));
             } elseif ($method === 'POST' && $column === 'is_published') {
-                $values[$column] = 1;
+                $values[$column] = $resource === 'clients' ? 0 : 1;
+            }
+        }
+
+        if ($resource === 'company') {
+            foreach (['facebook_url', 'youtube_url', 'twitter_url', 'linkedin_url', 'instagram_url'] as $socialUrlField) {
+                if (isset($values[$socialUrlField]) && $values[$socialUrlField] !== '' && !is_valid_http_url($values[$socialUrlField])) {
+                    json_response(422, ['error' => 'Social media links must use a valid HTTP or HTTPS URL.']);
+                }
             }
         }
 
@@ -107,7 +226,7 @@ function handle_content_resource(string $resource, array $definition, string $me
             }
         }
 
-        if (isset($values['image']) && $values['image'] !== '' && !filter_var($values['image'], FILTER_VALIDATE_URL)) {
+        if (isset($values['image']) && $values['image'] !== '' && !is_valid_image_reference($resource, $values['image'])) {
             json_response(422, ['error' => 'Image must be a valid public URL.']);
         }
 
@@ -145,6 +264,9 @@ function handle_content_resource(string $resource, array $definition, string $me
     }
 
     if ($method === 'DELETE') {
+        if ($resource === 'company') {
+            json_response(405, ['error' => 'The company profile is a single managed record and cannot be deleted.']);
+        }
         $id = filter_var($input['id'] ?? null, FILTER_VALIDATE_INT);
         if (!$id) {
             json_response(422, ['error' => 'A valid record ID is required.']);
@@ -158,6 +280,25 @@ function handle_content_resource(string $resource, array $definition, string $me
     }
 
     json_response(405, ['error' => 'Method not allowed.']);
+}
+
+function is_valid_image_reference(string $resource, string $image): bool
+{
+    if (
+        in_array($resource, ['projects', 'services', 'products', 'clients', 'gallery'], true)
+        && preg_match('#^/uploads/' . preg_quote($resource, '#') . '/[a-zA-Z0-9_-]+\.(?:jpg|png|webp)$#D', $image) === 1
+    ) {
+        return true;
+    }
+
+    return is_valid_http_url($image);
+}
+
+function is_valid_http_url(string $url): bool
+{
+    $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
+    return in_array($scheme, ['http', 'https'], true)
+        && filter_var($url, FILTER_VALIDATE_URL) !== false;
 }
 
 function record_exists(PDO $pdo, string $table, int $id): bool

@@ -16,9 +16,14 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($password) < 12) {
 }
 
 $statement = db()->prepare(
-    'INSERT INTO admins (email, password_hash, role, is_active)
-     VALUES (?, ?, "admin", 1)
-     ON DUPLICATE KEY UPDATE password_hash = VALUES(password_hash), is_active = 1'
+    'INSERT INTO admins (email, password_hash, role, is_active, must_change_password, auth_version)
+     VALUES (?, ?, "admin", 1, 1, 1)
+     ON DUPLICATE KEY UPDATE
+       password_hash = VALUES(password_hash),
+       is_active = 1,
+       must_change_password = 1,
+       auth_version = auth_version + 1'
 );
 $statement->execute([$email, password_hash($password, PASSWORD_DEFAULT)]);
 fwrite(STDOUT, "Administrator account configured for {$email}.\n");
+fwrite(STDOUT, "The administrator must change this password at first sign-in.\n");

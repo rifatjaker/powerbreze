@@ -165,8 +165,7 @@
 
       <h3>1.4 References</h3>
       <ul>
-        <li><a href="http://powerbreezebd.net/">Current company website</a></li>
-        <li><a href="https://powerbreeze.ca/">Planned website domain</a></li>
+        <li><a href="https://powerbreeze.ca/">Company website</a></li>
         <li>Applicable Bangladesh privacy, cybersecurity, and procurement requirements (to be confirmed)</li>
         <li>Canadian privacy and anti-spam requirements where the Canada office or Canadian audiences are in scope</li>
         <li>WCAG 2.1 Level AA</li>
@@ -230,7 +229,8 @@
         <li>Frontend: React with Vite, TypeScript, and Tailwind CSS.</li>
         <li>Backend: PHP 8 REST API.</li>
         <li>Database: MySQL 8.</li>
-        <li>Admin authentication: JWT access token stored for the browser session and sent using the <code>Authorization: Bearer &lt;token&gt;</code> header. Protected routes shall validate token signature, expiry, issuer, and administrator role.</li>
+        <li>Admin authentication: JWT access token stored for the browser session and sent using the <code>Authorization: Bearer &lt;token&gt;</code> header. Protected routes shall validate token signature, expiry, issuer, administrator role, and account authentication version.</li>
+        <li>The initial administrator password shall require a change on first sign-in. Until changed, the administrator shall only be able to access the password-change flow. After a successful change, the session shall be invalidated and the administrator shall sign in again with the new password.</li>
         <li>The frontend shall use a centralized API client to attach authentication headers to protected requests.</li>
         <li>Passwords shall use PHP password hashes. JWT signing secrets and database credentials shall remain server-side and out of the frontend bundle.</li>
         <li>Public visitors may read published services, products, and projects and submit inquiries. Mutations and inquiry access shall require an authenticated administrator.</li>
@@ -275,19 +275,21 @@
         <li>Solar plants, BBT systems, passenger/bed elevators</li>
         <li>Transformers, distribution boxes, synchronization panels, solar power systems, and diesel generators</li>
       </ul>
-      <p>Product records shall support descriptions, approved images, verified specifications, availability notes, and inquiry actions. Online purchase is out of scope.</p>
+      <p>Product records shall support descriptions, administrator-uploaded images, verified specifications, availability notes, and inquiry actions. The homepage shall show a curated preview linking to the complete, category-filterable catalogue. Online purchase is out of scope.</p>
 
       <h4>FR-05: Project Portfolio</h4>
       <p>Visitors shall be able to browse approved projects by title, client/sector, location, scope, verified capacity/voltage, completion period, and imagery. Confidential project details and client identities shall not be published without authorization.</p>
+      <p>The website shall provide a database-managed project photo gallery. Administrators shall be able to upload, caption, order, publish, and remove images. Public results shall be paginated with no more than 12 images per page.</p>
 
       <h4>FR-06: Clients and Enlistments</h4>
       <p>The site may display government/private-sector clients, procurement enlistments, and institutional references with permission and current verification; their display shall not imply endorsement.</p>
 
       <h4>FR-07: Offices and Coverage</h4>
       <p>The site shall publish confirmed Dhaka head-office, local-office, and Canada-office details where current. Coverage statements shall be confirmed by the company and shall not create unsupported local-service claims.</p>
+      <p>Administrators shall be able to configure Facebook, YouTube, Twitter/X, LinkedIn, and Instagram profile URLs. The footer shall display configured social icons alongside the company email link.</p>
       <p>The existing company website lists the following contact details; reconfirm them before launch:</p>
       <ul>
-        <li>Dhaka head office: Dr. Nawab Ali Tower, Suite #501E, 24/A Purana Paltan, Dhaka-1000, Bangladesh; +88-02-9585474; +8801711520071; info@powerbreezebd.net</li>
+        <li>Dhaka head office: Dr. Nawab Ali Tower, Suite #501E, 24/A Purana Paltan, Dhaka-1000, Bangladesh; +88-02-9585474; +8801711520071; info@powerbreeze.ca</li>
         <li>Local office: 438 Abedin Market (3rd Floor), Noyapara, Sonirakhra, P.O. Dania, P.S. Jatrabari, Dhaka-1236; +8801819244217; ripon_218@yahoo.com</li>
         <li>Canada office: Suite 31, Workplace K Ltd, 1940 Eglinton Ave East, Scarborough, ON M1L 4R1, Toronto, Canada; +1 (647) 332-4217; +1 (647) 858-5225</li>
       </ul>
