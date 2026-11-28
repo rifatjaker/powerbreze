@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import {
   Activity, ArrowDown, ArrowDownRight, ArrowLeft, ArrowRight, ArrowUpRight,
   BadgeCheck, Building2, Cable, Check, ChevronLeft, ChevronRight,
@@ -787,7 +788,7 @@ function ContactSection({ onSubmitted, company, status }: { onSubmitted: (messag
           </article>
         )) : <ContentPlaceholder loading={status === "loading"} error={status === "error"} />}
       </div>
-      {selectedOffice && (
+      {selectedOffice && createPortal(
         <div className="map-modal-backdrop" onClick={(event) => {
           if (event.target === event.currentTarget) setSelectedOffice(null);
         }}>
@@ -806,7 +807,8 @@ function ContactSection({ onSubmitted, company, status }: { onSubmitted: (messag
               <a href={googleMapsLink(selectedOffice.address)} target="_blank" rel="noreferrer">Open in Google Maps <ArrowUpRight size={14} /></a>
             </div>
           </section>
-        </div>
+        </div>,
+        document.body,
       )}
     </section>
   );
